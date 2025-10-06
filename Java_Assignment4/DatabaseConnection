@@ -1,0 +1,23 @@
+class DatabaseConnection {
+    private static DatabaseConnection instance;
+    private DatabaseConnection() {
+        System.out.println("Database connected");
+    }
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
+    }
+    public void execute(String query) {
+        System.out.println("Executing: " + query);
+    }
+    public static void main(String[] args) {
+        DatabaseConnection db1 = DatabaseConnection.getInstance();
+        DatabaseConnection db2 = DatabaseConnection.getInstance();
+
+        System.out.println("Same instance: " + (db1 == db2));
+
+        db1.execute("SELECT * FROM users");
+    }
+}
